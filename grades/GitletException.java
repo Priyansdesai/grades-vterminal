@@ -4,16 +4,16 @@ package grades;
  *  result of .getMessage() is the error message to be printed.
  *  @author P. N. Hilfinger
  */
-class GradesException extends RuntimeException {
+public class GitletException extends RuntimeException {
 
 
     /** A GitletException with no message. */
-    GradesException() {
+    GitletException() {
         super();
     }
 
     /** A GitletException MSG as its message. */
-    GradesException(String msg) {
+    GitletException(String msg) {
         super(msg);
     }
 

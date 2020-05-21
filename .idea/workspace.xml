@@ -19,10 +19,35 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../cs61b-software/cs61b-software/lib/ucb.jar!/" />
-    <property name="project.structure.last.edited" value="Libraries" />
-    <property name="project.structure.proportion" value="0.0" />
-    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="grades" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="grades.Main" />
+      <module name="grades-vterminal" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="grades.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Main" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="ServiceViewManager">
     <option name="viewStates">
@@ -50,13 +75,17 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state x="481" y="282" key="FileChooserDialogImpl" timestamp="1578376908210">
+    <state x="345" y="141" key="#Project_Structure" timestamp="1589992180240">
       <screen x="0" y="0" width="1504" height="963" />
     </state>
-    <state x="481" y="282" key="FileChooserDialogImpl/0.0.1504.963@0.0.1504.963" timestamp="1578376908210" />
-    <state x="254" y="115" key="SettingsEditor" timestamp="1578376914272">
+    <state x="345" y="141" key="#Project_Structure/0.0.1504.963@0.0.1504.963" timestamp="1589992180240" />
+    <state x="483" y="230" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1589993088631">
       <screen x="0" y="0" width="1504" height="963" />
     </state>
-    <state x="254" y="115" key="SettingsEditor/0.0.1504.963@0.0.1504.963" timestamp="1578376914272" />
+    <state x="483" y="230" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1504.963@0.0.1504.963" timestamp="1589993088631" />
+    <state x="233" y="57" key="SettingsEditor" timestamp="1589992225641">
+      <screen x="0" y="0" width="1504" height="963" />
+    </state>
+    <state x="233" y="57" key="SettingsEditor/0.0.1504.963@0.0.1504.963" timestamp="1589992225641" />
   </component>
 </project>

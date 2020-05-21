@@ -221,9 +221,9 @@ class Utils {
     /* MESSAGES AND ERROR REPORTING */
 
     /** Return a GitletException whose message is composed from MSG and ARGS as
-     *  for the String.format method. */
-    static GradesException error(String msg, Object... args) {
-        return new GradesException(String.format(msg, args));
+     *  for the Strinjag.format method. */
+    static GitletException error(String msg, Object... args) {
+       return new GitletException(msg);
     }
 
     /** Print a message composed from MSG and ARGS as for the String.format
