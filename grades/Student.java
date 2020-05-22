@@ -14,9 +14,7 @@ import java.nio.file.Paths;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
-import java.util.Formatter;
-import java.util.List;
+import java.util.*;
 
 
 /** Student Class
@@ -28,6 +26,7 @@ class Student implements Serializable {
     Student(String name) {
         _name = name;
         _accountLocked = true;
+        _courses = new ArrayList<Subject>();
     }
 
     /** Returns the name of the student. */
@@ -61,7 +60,27 @@ class Student implements Serializable {
 
     /** Adds an assignment for the student. */
     void addSubject(String... args) {
+        String name = args[1];
+        if (!name().equals("None")) {
+            _courses.add(new Subject(name));
+        } else {
+            System.out.println("You need to sign in to add a subject.");
+        }
+    }
 
+    /** Adds subject using .txt file. */
+    void addSubjects(String... args) {
+        if (!name().equals("None")) {
+            int totalSubjects = Integer.parseInt(args[1]);
+            for (int i = 0; i < totalSubjects; i++) {
+                System.out.println("Enter Course No." + i);
+                Scanner courseInput = new Scanner(System.in);
+                String course = courseInput.nextLine();
+                addSubject("add-subject" + course);
+            }
+        } else {
+            System.out.println("You need to sign in to add a subject.");
+        }
     }
 
     /** Returns the password of the student. */
@@ -83,4 +102,6 @@ class Student implements Serializable {
     /** States the current state of the account. */
     private boolean _accountLocked;
 
+    /** Courses Taken. */
+    private ArrayList<Subject> _courses;
 }

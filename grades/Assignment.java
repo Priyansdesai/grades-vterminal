@@ -19,8 +19,8 @@ import java.util.Formatter;
 import java.util.List;
 
 
-/** Assignment Class
- * @author P. N. Desai
+/** Assorted utilities.
+ *  @author P. N. Hilfinger
  */
 class Assignment {
 

@@ -27,8 +27,12 @@ class Main {
                 signOut(args[1]);
             } else if (args[0].equals("add-subject")) {
                 _currentStudent.addSubject(args);
+            } else if (args[0].equals("add-subjects")) {
+                _currentStudent.addSubjects(args);
             }
             updateCurrentStudent();
+        } else {
+            System.out.println("You need to run init to initialize the grading system.");
         }
     }
 
@@ -142,6 +146,11 @@ class Main {
     static void updateCurrentStudent() {
         File currentStudent = Utils.join(_gradesDirectory, "currentStudent");
         Utils.writeContents(currentStudent, Utils.serialize(_currentStudent));
+    }
+
+    static void takeSubjects() {
+
+
     }
 
     /** Defines the CWD. */
