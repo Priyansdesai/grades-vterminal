@@ -1,21 +1,7 @@
 package grades;
 
-import java.io.BufferedOutputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FilenameFilter;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
-import java.util.Formatter;
 import java.util.List;
 import java.util.Scanner;
 
@@ -23,17 +9,26 @@ import java.util.Scanner;
  *  @author P. N. Desai
  */
 class Main {
-    /** Usage: java gitlet.Main ARGS, where ARGS contains
+    /** Usage: java grades.Main ARGS, where ARGS contains
      *  <COMMAND> <OPERAND> .... */
     public static void main(String... args) {
         if (args.length == 0) {
             exitWithoutError("Enter a command.");
-        } else if (args[0].equals("student")) {
-            //checkParam(args);
-            String name = args[1];
-            studentexist(name);
-        } else if (args[0].equals("sign-in")) {
-            checkParam(args);
+        } else if (args[0].equals("init")) {
+            setUp();
+        } else if (_gradesDirectory.exists()) {
+            retrieveCurrentStudent();
+            if (args[0].equals("sign-up")) {
+                String name = args[1];
+                studentexist(name);
+            } else if (args[0].equals("sign-in")) {
+                signIn(args[1], Utils.join(_studentsDirectory, args[1]));
+            } else if (args[0].equals("sign-out")) {
+                signOut(args[1]);
+            } else if (args[0].equals("add-subject")) {
+                _currentStudent.addSubject(args);
+            }
+            updateCurrentStudent();
         }
     }
 
@@ -46,11 +41,15 @@ class Main {
     }
 
     /** Checks for incorrect operands. */
-    static void checkParam(String... args) {
-        if (args.length != 1) {
-            exitWithoutError("Missing or excessive information found.");
-        }
+    static void setUp() {
+        boolean gCreated = _gradesDirectory.mkdir();
+        boolean sCreated = _studentsDirectory.mkdir();
+        _currentStudent = new Student("None");
+        Utils.writeContents(Utils.join(_gradesDirectory, "currentStudent"),
+                Utils.serialize(_currentStudent));
     }
+
+    /** Setup
 
     /** Checks if the student exists in the system. */
     static void studentexist(String name) {
@@ -70,12 +69,7 @@ class Main {
                 }
             }
         } else {
-            boolean gCreated = gradesDirectory.mkdir();
-            boolean sCreated = studentsDirectory.mkdir();
-            boolean studentNDirectory = studentNameDirectory.mkdir();
-            Student s = new Student(name);
-            studentCreation(s, studentNameDirectory);
-
+            System.out.println("Grades track not initialized.");
         }
     }
 
@@ -94,11 +88,72 @@ class Main {
     /** Signs-in a student. */
     public static void signIn(String name, File studentNameDirectory) {
         File studentFile = Utils.join(studentNameDirectory, name);
-        Scanner passwordEntry = new Scanner(System.in);
-        String passwordEntered = passwordEntry.nextLine();
-        Student s = Utils.readObject(studentFile, Student.class);
-        s.passwordMatch(passwordEntered);
+        if (_currentStudent.name().equals("None")) {
+            if (studentNameDirectory.exists()) {
+                System.out.println("Enter the password for sign-in.");
+                Scanner passwordEntry = new Scanner(System.in);
+                String passwordEntered = passwordEntry.nextLine();
+                Student s = Utils.readObject(studentFile, Student.class);
+                s.passwordMatch(passwordEntered, false);
+                if (!s.accountLocked()) {
+                    _currentStudent = s;
+                } else {
+                    _currentStudent = new Student("None");
+                }
+            } else {
+                System.out.println("Please create your account first by running the command 'sign-up " + name + "'");
+            }
+        } else {
+            System.out.println(_currentStudent.name() + " needs to sign-out first.");
+        }
     }
 
+    /** Signs-out a student. */
+    public static void signOut(String name) {
+        File studentNameDirectory = Utils.join(_studentsDirectory, name);
+        if (!_currentStudent.name().equals("None")) {
+            if (studentNameDirectory.exists()) {
+                if (_currentStudent.name().equals(name)) {
+                    System.out.println("Enter the password for sign-in.");
+                    Scanner passwordEntry = new Scanner(System.in);
+                    String passwordEntered = passwordEntry.nextLine();
+                    _currentStudent.passwordMatch(passwordEntered, true);
+                    if (_currentStudent.accountLocked()) {
+                        _currentStudent = new Student("None");
+                    }
+                } else {
+                    System.out.println("You cannot sign-out for" + _currentStudent.name());
+                }
+            } else {
+                System.out.println("Please create your account first by running the command 'sign-up " + name + "'");
+            }
+        } else {
+            System.out.println("Someone needs to be signed-in to sign-out.");
+        }
+    }
+
+    /** Retrieves the current student.*/
+    static void retrieveCurrentStudent() {
+        Student cS = Utils.readObject(Utils.join(_gradesDirectory, "currentStudent"), Student.class);
+        _currentStudent = cS;
+    }
+
+    /** Updates the current student Field. */
+    static void updateCurrentStudent() {
+        File currentStudent = Utils.join(_gradesDirectory, "currentStudent");
+        Utils.writeContents(currentStudent, Utils.serialize(_currentStudent));
+    }
+
+    /** Defines the CWD. */
+    static String _cwd = System.getProperty("user.dir");
+
+    /** Defines the grade directory. */
+    static File _gradesDirectory = Utils.join(_cwd, ".grades");
+
+    /** Defines the student directory. */
+    static File _studentsDirectory = Utils.join(_gradesDirectory, ".students");
+
+    /** Defines the current student who is logged in. */
+    static Student _currentStudent;
 
 }

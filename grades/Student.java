@@ -41,16 +41,37 @@ class Student implements Serializable {
     }
 
     /** Checks if the password is right. */
-    void passwordMatch(String enteredPassword) {
-        if (_accountLocked && enteredPassword.equals(password())) {
-            _accountLocked = false;
-            System.out.println("Access Granted to " + name());
+    void passwordMatch(String enteredPassword, boolean reverse) {
+        if (!reverse) {
+            if (_accountLocked && enteredPassword.equals(password())) {
+                _accountLocked = false;
+                System.out.println("Access Granted to " + name());
+            } else {
+                System.out.println("Sign-in unsuccessful.");
+            }
+        } else {
+            if (!_accountLocked && enteredPassword.equals(password())) {
+                _accountLocked = true;
+                System.out.println("Successful sign-out by  " + name());
+            } else {
+                System.out.println("Sign-out unsuccessful.");
+            }
         }
+    }
+
+    /** Adds an assignment for the student. */
+    void addSubject(String... args) {
+
     }
 
     /** Returns the password of the student. */
     String password() {
         return _password;
+    }
+
+    /** Returns if the account is locked or not. */
+    boolean accountLocked() {
+        return _accountLocked;
     }
 
     /** Name of the student. */
