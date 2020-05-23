@@ -55,6 +55,7 @@ class Main {
         _currentStudent = new Student("None");
         Utils.writeContents(Utils.join(_gradesDirectory, "currentStudent"),
                 Utils.serialize(_currentStudent));
+        boolean subjectsDirectory = Utils.join(Main._gradesDirectory, ".subjects").mkdir();
     }
 
     /** Setup

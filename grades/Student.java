@@ -26,7 +26,7 @@ class Student implements Serializable {
     Student(String name) {
         _name = name;
         _accountLocked = true;
-        _courses = new ArrayList<Subject>();
+        _courses = new ArrayList<String>();
     }
 
     /** Returns the name of the student. */
@@ -62,7 +62,9 @@ class Student implements Serializable {
     void addSubject(String... args) {
         String name = args[1];
         if (!name().equals("None")) {
-            _courses.add(new Subject(name));
+            Subject course = new Subject(name);
+            Utils.writeContents(Utils.join(_subjectsDirectory, name), Utils.serialize(course));
+            _courses.add(name);
         } else {
             System.out.println("You need to sign in to add a subject.");
         }
@@ -90,14 +92,11 @@ class Student implements Serializable {
             String componentName = args[1];
             int weightage = Integer.parseInt(args[2]);
             boolean foundCourse = false;
-            for (Subject course: _courses) {
-                if (course.name().equals(courseName)) {
-                    course.addComponent(componentName, weightage);
-                    foundCourse = true;
-                }
-            }
-            if (!foundCourse) {
-                System.out.println("No Course found matching this code");
+            if (_courses.contains(courseName)) {
+                Subject course = Utils.readObject(Utils.join(_subjectsDirectory, courseName), Subject.class);
+                course.addComponent(componentName, weightage);
+            } else {
+                System.out.println("The course to which you are trying to add the component does not exist.");
             }
         } else {
             System.out.println("You need to sign in to add a subject.");
@@ -129,5 +128,8 @@ class Student implements Serializable {
     private boolean _accountLocked;
 
     /** Courses Taken. */
-    private ArrayList<Subject> _courses;
+    private ArrayList<String> _courses;
+
+    /** Subjects Directory. */
+    private final File _subjectsDirectory = Utils.join(Main._gradesDirectory, ".subjects");
 }
