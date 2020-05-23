@@ -35,7 +35,7 @@ class Subject implements Serializable {
 
     /** Adds every component for the class. */
     void addComponent(String name, int weight) {
-        
+
 
     }
 
