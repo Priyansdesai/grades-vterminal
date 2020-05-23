@@ -28,13 +28,32 @@ class Subject implements Serializable {
     /** Initializing Subject. */
     Subject(String name) {
         _name = name;
-        _assignments = new ArrayList<Assignment>();
+        _components = new ArrayList<Assignment>();
+        _totalComponentWeightage = 0;
+        _readerScoreAdjustmentRequired = false;
+    }
+
+    /** Adds every component for the class. */
+    void addComponent(String name, int weight) {
+        
+
+    }
+
+    /** Returns the name of the course. */
+    String name() {
+        return _name;
     }
 
     /** Name of the subject. */
     private String _name;
 
     /** List of components. */
-    private ArrayList<Assignment> _assignments;
+    private ArrayList<Assignment> _components;
+
+    /** Total Component Weightage. */
+    private int _totalComponentWeightage;
+
+    /** Reader Adjustment Factor Required. */
+    private boolean _readerScoreAdjustmentRequired;
 
 }

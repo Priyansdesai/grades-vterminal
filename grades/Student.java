@@ -73,14 +73,40 @@ class Student implements Serializable {
         if (!name().equals("None")) {
             int totalSubjects = Integer.parseInt(args[1]);
             for (int i = 0; i < totalSubjects; i++) {
-                System.out.println("Enter Course No." + i);
+                System.out.println("Enter Course No. as <Course Name> <Course Number>, like 'Data 8'" + i);
                 Scanner courseInput = new Scanner(System.in);
                 String course = courseInput.nextLine();
-                addSubject("add-subject" + course);
+                addSubject("add-subject", course);
             }
         } else {
             System.out.println("You need to sign in to add a subject.");
         }
+    }
+
+    /** Add different components associated with different components. */
+    void addComponent(String... args) {
+        if(!name().equals("None")) {
+            String courseName = args[0];
+            String componentName = args[1];
+            int weightage = Integer.parseInt(args[2]);
+            boolean foundCourse = false;
+            for (Subject course: _courses) {
+                if (course.name().equals(courseName)) {
+                    course.addComponent(componentName, weightage);
+                    foundCourse = true;
+                }
+            }
+            if (!foundCourse) {
+                System.out.println("No Course found matching this code");
+            }
+        } else {
+            System.out.println("You need to sign in to add a subject.");
+        }
+    }
+
+    /** Adds multiple components for a class. */
+    void addComponents(String... args) {
+
     }
 
     /** Returns the password of the student. */

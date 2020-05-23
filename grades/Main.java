@@ -29,6 +29,10 @@ class Main {
                 _currentStudent.addSubject(args);
             } else if (args[0].equals("add-subjects")) {
                 _currentStudent.addSubjects(args);
+            } else if (args[0].equals("add-component")) {
+                _currentStudent.addComponent(args);
+            } else if(args[0].equals("add-components")) {
+                _currentStudent.addComponents(args);
             }
             updateCurrentStudent();
         } else {
