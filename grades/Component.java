@@ -1,10 +1,12 @@
 package grades;
 
 
+import java.io.Serializable;
+
 /** Assignment Class
  * @author P. N. Desai
  */
-class Component {
+class Component implements Serializable {
 
     Component(String name, int weight) {
         _name = name;

@@ -62,8 +62,18 @@ class Student implements Serializable {
     void addSubject(String... args) {
         String name = args[1];
         if (!name().equals("None")) {
-            Subject course = new Subject(name);
-            Utils.writeContents(Utils.join(_subjectsDirectory, name), Utils.serialize(course));
+            if (!Utils.join(_subjectsDirectory, name).exists()) {
+                System.out.println("Please enter the total points for the course");
+                Scanner courseInputPoints = new Scanner(System.in);
+                String coursePoints = courseInputPoints.nextLine();
+                int totalPoints = Integer.parseInt(coursePoints);
+                Subject course = new Subject(name, totalPoints);
+                String fileName = name + "-info";
+                File subjectSpecificDirectory = Utils.join(_subjectsDirectory, name);
+                subjectSpecificDirectory.mkdir();
+                File subjectFile = Utils.join(subjectSpecificDirectory, fileName);
+                Utils.writeContents(subjectFile, Utils.serialize(course));
+            }
             _courses.add(name);
         } else {
             System.out.println("You need to sign in to add a subject.");
@@ -88,13 +98,12 @@ class Student implements Serializable {
     /** Add different components associated with different components. */
     void addComponent(String... args) {
         if(!name().equals("None")) {
-            String courseName = args[0];
-            String componentName = args[1];
-            int weightage = Integer.parseInt(args[2]);
-            boolean foundCourse = false;
+            String courseName = args[1];
+            String componentName = args[2];
             if (_courses.contains(courseName)) {
-                Subject course = Utils.readObject(Utils.join(_subjectsDirectory, courseName), Subject.class);
-                course.addComponent(componentName, weightage);
+                File subjectFile = Utils.join(_subjectsDirectory, courseName, courseName + "-info");
+                Subject course = Utils.readObject(subjectFile, Subject.class);
+                course.addComponent(componentName);
             } else {
                 System.out.println("The course to which you are trying to add the component does not exist.");
             }
