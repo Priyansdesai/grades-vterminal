@@ -94,6 +94,19 @@ class Subject implements Serializable {
 
     }
 
+    /** Sets the points for the course. */
+    void setPoints(int value) {
+        _totalComponentWeightage = value;
+    }
+
+    /** Sets the curved nature of the class. */
+    void setCurved(String val) {
+        _curved = false;
+        if (val.charAt(0) == 'y' || val.charAt(0) == 'Y') {
+            _curved = true;
+        }
+    }
+
     /** Returns the name of the course. */
     String name() {
         return _name;

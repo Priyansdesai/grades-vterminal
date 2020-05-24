@@ -34,13 +34,9 @@ class Main {
             } else if(args[0].equals("add-components")) {
                 _currentStudent.addComponents(args);
             } else if (args[0].equals("edit-subject")) {
-
+                _currentStudent.editSubject(args);
             } else if(args[0].equals("edit-component")) {
-
-            } else if (args[0].equals("remove-subject")) {
-
-            } else if (args[0].equals("remove-component")) {
-
+                _currentStudent.editComponent(args);
             }
             updateCurrentStudent();
         } else {

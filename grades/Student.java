@@ -148,23 +148,28 @@ class Student implements Serializable {
     /** For command which edits information about different subjects' components. */
     void editSubject(String... args) {
         String name = args[1];
+        String part = args[2];
+        String newValue = args[3];
         if (!name().equals("None")) {
             if (Utils.join(_subjectsDirectory, name).exists()) {
-                System.out.println("Please enter the total points for the course");
-                Scanner courseInputPoints = new Scanner(System.in);
-                String coursePoints = courseInputPoints.nextLine();
-                int totalPoints = Integer.parseInt(coursePoints);
-                System.out.println("Please enter whether the class is curved");
-                Scanner curvedInput = new Scanner(System.in);
-                String curvedOrnot = curvedInput.nextLine();
-                Subject course = new Subject(name, totalPoints, curvedOrnot);
-                String fileName = name + "-info";
-                File subjectSpecificDirectory = Utils.join(_subjectsDirectory, name);
-                subjectSpecificDirectory.mkdir();
-                File subjectFile = Utils.join(subjectSpecificDirectory, fileName);
-                Utils.writeContents(subjectFile, Utils.serialize(course));
+                if (_courses.contains(name)) {
+                    if (!part.equals("name")) {
+                        File subjectFile = Utils.join(_subjectsDirectory, name, name + "-info");
+                        Subject sub = Utils.readObject(subjectFile, Subject.class);
+                        if (part.equals("points")) {
+                            sub.setPoints(Integer.parseInt(newValue));
+                        } else if (part.equals("curved")) {
+                            sub.setCurved(newValue);
+                        }
+                        Utils.writeContents(subjectFile, sub);
+                    } else {
+                        System.out.println("You cannot edit the name of a course with this level of access. Request your administrator.");
+                    }
+                } else {
+                    System.out.println("You cannot edit a course that you have not opted for.");
+                }
             } else {
-                System.out.println("You cannot edit a course not added.");
+                System.out.println("You cannot edit a course which does not exist.");
             }
         } else {
             System.out.println("You need to sign in to add a subject.");
