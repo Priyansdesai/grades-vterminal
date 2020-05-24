@@ -43,7 +43,12 @@ class Subject implements Serializable {
             Scanner weightageInput = new Scanner(System.in);
             String weight = weightageInput.nextLine();
             int weightage = Integer.parseInt(weight);
-            Utils.writeContents(componentFile, Utils.serialize(new Component(name, weightage)));
+            System.out.println("Please enter whether the score for this component is reader-score-adjusted.");
+            Scanner readerAdjustmentInput = new Scanner(System.in);
+            String readerAdjustment = readerAdjustmentInput.nextLine();
+            boolean readerAdjustmentApplied = Boolean.parseBoolean(readerAdjustment);
+            Utils.writeContents(componentFile, Utils.serialize(new Component(name, weightage,
+                    readerAdjustmentApplied)));
             _totalComponentWeightage += weightage;
 
         }

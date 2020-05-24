@@ -97,7 +97,7 @@ class Student implements Serializable {
 
     /** Add different components associated with different components. */
     void addComponent(String... args) {
-        if(!name().equals("None")) {
+        if (!name().equals("None")) {
             String courseName = args[1];
             String componentName = args[2];
             if (_courses.contains(courseName)) {
@@ -114,7 +114,11 @@ class Student implements Serializable {
 
     /** Adds multiple components for a class. */
     void addComponents(String... args) {
-
+        if (!name().equals("None")) {
+            
+        } else {
+            System.out.println("You need to sign in to add a subject.");
+        }
     }
 
     /** Returns the password of the student. */

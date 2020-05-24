@@ -20,7 +20,7 @@ import java.util.List;
 
 
 /** Assorted utilities.
- *  @author P. N. Hilfinger
+ *  @author P. N. Desai
  */
 class Assignment {
 

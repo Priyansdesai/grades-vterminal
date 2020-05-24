@@ -152,7 +152,7 @@ class Main {
         File currentStudent = Utils.join(_gradesDirectory, "currentStudent");
         Utils.writeContents(currentStudent, Utils.serialize(_currentStudent));
     }
-    
+
 
     /** Defines the CWD. */
     static String _cwd = System.getProperty("user.dir");
