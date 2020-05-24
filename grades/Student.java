@@ -1,19 +1,7 @@
 package grades;
 
-import java.io.BufferedOutputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FilenameFilter;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.*;
 
 
@@ -105,7 +93,7 @@ class Student implements Serializable {
                 Subject course = Utils.readObject(subjectFile, Subject.class);
                 course.addComponent(componentName);
             } else {
-                System.out.println("The course to which you are trying to add the component does not exist.");
+                System.out.println("You need to have added the course to which you are trying to add the assignment.");
             }
         } else {
             System.out.println("You need to sign in to add a subject.");
@@ -115,10 +103,31 @@ class Student implements Serializable {
     /** Adds multiple components for a class. */
     void addComponents(String... args) {
         if (!name().equals("None")) {
-            
+            int totalComponents = Integer.parseInt(args[1]);
+            String courseName = args[1];
+            if (_courses.contains(courseName)) {
+                for (int i = 0; i < totalComponents; i++) {
+                    System.out.println("Enter the name of the component");
+                    Scanner componentInput = new Scanner(System.in);
+                    String input = componentInput.nextLine();
+                    addComponent("add-component", courseName, input);
+                }
+            } else {
+                System.out.println("You need to have added the course to which you are trying to add the assignment.");
+            }
         } else {
             System.out.println("You need to sign in to add a subject.");
         }
+    }
+
+    /** For command which edits information about different subjects. */
+    void editSubject(String... args) {
+
+    }
+
+    /** For command which edits information about different subjects' components. */
+    void editComponent(String... args) {
+        
     }
 
     /** Returns the password of the student. */

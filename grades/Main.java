@@ -33,6 +33,10 @@ class Main {
                 _currentStudent.addComponent(args);
             } else if(args[0].equals("add-components")) {
                 _currentStudent.addComponents(args);
+            } else if (args[0].equals("edit-subject")) {
+
+            } else if(args[0].equals("edit-component")) {
+
             }
             updateCurrentStudent();
         } else {
