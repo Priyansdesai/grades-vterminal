@@ -37,6 +37,10 @@ class Main {
 
             } else if(args[0].equals("edit-component")) {
 
+            } else if (args[0].equals("remove-subject")) {
+
+            } else if (args[0].equals("remove-component")) {
+
             }
             updateCurrentStudent();
         } else {

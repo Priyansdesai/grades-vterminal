@@ -2,6 +2,7 @@ package grades;
 
 
 import java.io.Serializable;
+import java.util.HashMap;
 
 /** Assignment Class
  * @author P. N. Desai
@@ -12,6 +13,26 @@ class Component implements Serializable {
         _name = name;
         _weight = weight;
         _readerAdjustment = readerAdjustment;
+        _drops = drops;
+    }
+
+    /** Sets the name of the component. */
+    void setName(String name) {
+        _name = name;
+    }
+
+    /** Sets the weight of the component. */
+    void setWeight(int weight) {
+        _weight = weight;
+    }
+
+    /** Sets the readerAdjustment of the component. */
+    void setReaderAdjustment(boolean readerAdjustment) {
+        _readerAdjustment = readerAdjustment;
+    }
+
+    /** Sets the drops for the component. */
+    void setDrops(int drops) {
         _drops = drops;
     }
 
@@ -26,6 +47,7 @@ class Component implements Serializable {
 
     /** No. of drops on this component. */
     private int _drops;
+
 
 
 }

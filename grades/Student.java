@@ -55,7 +55,10 @@ class Student implements Serializable {
                 Scanner courseInputPoints = new Scanner(System.in);
                 String coursePoints = courseInputPoints.nextLine();
                 int totalPoints = Integer.parseInt(coursePoints);
-                Subject course = new Subject(name, totalPoints);
+                System.out.println("Please enter whether the class is curved");
+                Scanner curvedInput = new Scanner(System.in);
+                String curvedOrnot = curvedInput.nextLine();
+                Subject course = new Subject(name, totalPoints, curvedOrnot);
                 String fileName = name + "-info";
                 File subjectSpecificDirectory = Utils.join(_subjectsDirectory, name);
                 subjectSpecificDirectory.mkdir();
@@ -131,11 +134,8 @@ class Student implements Serializable {
                 File subjectFile = Utils.join(_subjectsDirectory, courseName, courseName + "-info");
                 if (subjectFile.exists()) {
                     Subject course = Utils.readObject(subjectFile, Subject.class);
-                    course.addComponent(componentName);
-                } else {
-
+                    course.editComponent(componentName, part, newValue);
                 }
-
             } else {
                 System.out.println("You need to have added the course to which you are trying to add the assignment.");
             }
@@ -147,6 +147,28 @@ class Student implements Serializable {
 
     /** For command which edits information about different subjects' components. */
     void editSubject(String... args) {
+        String name = args[1];
+        if (!name().equals("None")) {
+            if (Utils.join(_subjectsDirectory, name).exists()) {
+                System.out.println("Please enter the total points for the course");
+                Scanner courseInputPoints = new Scanner(System.in);
+                String coursePoints = courseInputPoints.nextLine();
+                int totalPoints = Integer.parseInt(coursePoints);
+                System.out.println("Please enter whether the class is curved");
+                Scanner curvedInput = new Scanner(System.in);
+                String curvedOrnot = curvedInput.nextLine();
+                Subject course = new Subject(name, totalPoints, curvedOrnot);
+                String fileName = name + "-info";
+                File subjectSpecificDirectory = Utils.join(_subjectsDirectory, name);
+                subjectSpecificDirectory.mkdir();
+                File subjectFile = Utils.join(subjectSpecificDirectory, fileName);
+                Utils.writeContents(subjectFile, Utils.serialize(course));
+            } else {
+                System.out.println("You cannot edit a course not added.");
+            }
+        } else {
+            System.out.println("You need to sign in to add a subject.");
+        }
 
     }
 

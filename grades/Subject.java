@@ -24,12 +24,16 @@ import java.util.concurrent.CompletionException;
 class Subject implements Serializable {
 
     /** Initializing Subject. */
-    Subject(String name, int totalPoints) {
+    Subject(String name, int totalPoints, String curved) {
         _name = name;
         _totalComponentWeightage = totalPoints;
         _totalTillNow = 0;
         _subjectSpecificDirectory = Utils.join(_subjectsDirectory, _name);
         _subjectFile = Utils.join(_subjectSpecificDirectory, _name + "-info");
+        _curved = false;
+        if (curved.charAt(0) == 'Y' || curved.charAt(0) == 'y') {
+            _curved = true;
+        }
 
     }
 
@@ -61,7 +65,32 @@ class Subject implements Serializable {
         }
     }
 
-    void editComponent(String name, int weight, boolean readerAdjustment) {
+    /** Allows the editing of different components of the course. */
+    void editComponent(String componentName, String part, String value) {
+        File componentFile = Utils.join(_subjectSpecificDirectory, componentName);
+        if (componentFile.exists()) {
+            Component componentObj = Utils.readObject(componentFile, Component.class);
+            if (part.equals("name")) {
+                componentObj.setName(value);
+                Utils.writeContents(Utils.join(_subjectSpecificDirectory, value), Utils.serialize(componentObj));
+                Utils.restrictedDelete(componentFile);
+            } else if (part.equals("reader-adjustment")) {
+                boolean realValue = true;
+                if (value.charAt(0) == 'n' || value.charAt(0) == 'N') {
+                    realValue = false;
+                }
+                componentObj.setReaderAdjustment(realValue);
+                Utils.writeContents(componentFile, Utils.serialize(componentObj));
+            } else if (part.equals("drops")) {
+                componentObj.setDrops(Integer.parseInt(value));
+                Utils.writeContents(componentFile, Utils.serialize(componentObj));
+            } else if (part.equals("weightage")) {
+                componentObj.setWeight(Integer.parseInt(value));
+                Utils.writeContents(componentFile, Utils.serialize(componentObj));
+            }
+        } else {
+            System.out.println("The component you are trying to edit does not exist in this course.");
+        }
 
     }
 
@@ -87,4 +116,11 @@ class Subject implements Serializable {
 
     /** Represents the total till now. */
     private int _totalTillNow;
+
+    /** Grade boundaries for the class. */
+    private HashMap<String, Integer> _gradeBoundaries;
+
+    /** Curved or not. */
+    private boolean _curved;
+
 }
