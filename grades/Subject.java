@@ -47,14 +47,22 @@ class Subject implements Serializable {
             Scanner readerAdjustmentInput = new Scanner(System.in);
             String readerAdjustment = readerAdjustmentInput.nextLine();
             boolean readerAdjustmentApplied = Boolean.parseBoolean(readerAdjustment);
+            System.out.println("Please enter the no. of drops on this assignment");
+            Scanner dropInput = new Scanner(System.in);
+            String drop = dropInput.nextLine();
+            int drops = Integer.parseInt(drop);
             Utils.writeContents(componentFile, Utils.serialize(new Component(name, weightage,
-                    readerAdjustmentApplied)));
+                    readerAdjustmentApplied, drops)));
             _totalComponentWeightage += weightage;
 
         }
         if (!(_totalComponentWeightage == _totalTillNow)) {
             System.out.println("You need to add more components for the total to add up ");
         }
+    }
+
+    void editComponent(String name, int weight, boolean readerAdjustment) {
+
     }
 
     /** Returns the name of the course. */

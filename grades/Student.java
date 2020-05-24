@@ -103,7 +103,7 @@ class Student implements Serializable {
     /** Adds multiple components for a class. */
     void addComponents(String... args) {
         if (!name().equals("None")) {
-            int totalComponents = Integer.parseInt(args[1]);
+            int totalComponents = Integer.parseInt(args[2]);
             String courseName = args[1];
             if (_courses.contains(courseName)) {
                 for (int i = 0; i < totalComponents; i++) {
@@ -121,13 +121,33 @@ class Student implements Serializable {
     }
 
     /** For command which edits information about different subjects. */
-    void editSubject(String... args) {
+    void editComponent(String... args) {
+        if (!name().equals("None")) {
+            String courseName = args[1];
+            String componentName = args[2];
+            String part = args[3];
+            String newValue = args[4];
+            if (_courses.contains(courseName)) {
+                File subjectFile = Utils.join(_subjectsDirectory, courseName, courseName + "-info");
+                if (subjectFile.exists()) {
+                    Subject course = Utils.readObject(subjectFile, Subject.class);
+                    course.addComponent(componentName);
+                } else {
+
+                }
+
+            } else {
+                System.out.println("You need to have added the course to which you are trying to add the assignment.");
+            }
+        } else {
+            System.out.println("You need to sign in to add a subject.");
+        }
 
     }
 
     /** For command which edits information about different subjects' components. */
-    void editComponent(String... args) {
-        
+    void editSubject(String... args) {
+
     }
 
     /** Returns the password of the student. */

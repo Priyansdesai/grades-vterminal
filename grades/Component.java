@@ -8,10 +8,11 @@ import java.io.Serializable;
  */
 class Component implements Serializable {
 
-    Component(String name, int weight, boolean readerAdjustment) {
+    Component(String name, int weight, boolean readerAdjustment, int drops) {
         _name = name;
         _weight = weight;
         _readerAdjustment = readerAdjustment;
+        _drops = drops;
     }
 
     /**Name of the Component. */
@@ -22,6 +23,9 @@ class Component implements Serializable {
 
     /** Specifies whether the score of this component is impacted by a reader adjustment. */
     private boolean _readerAdjustment;
+
+    /** No. of drops on this component. */
+    private int _drops;
 
 
 }
